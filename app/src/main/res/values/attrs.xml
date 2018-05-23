@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<attr name="mText" format="string"/>
+<attr name="mTextColor" format="color"/>
+<attr name="mTextSize" format="dimension"/>
+<declare-styleable name="customText">
+    <attr name="mText"/>
+    <attr name="mTextColor"/>
+    <attr name="mTextSize"/>
+</declare-styleable>
+    <declare-styleable name="SideText">
+        <attr name="textSize" format="dimension"/>
+        <attr name="textSpace" format="dimension"/>
+        <attr name="textDefaultColor" format="color"/>
+        <attr name="textTouchedColor" format="color"/>
+        <attr name="selectedColor" format="color"/>
+        <attr name="tWidth" format="dimension"/>
+        <attr name="backColor" format="color"/>
+    </declare-styleable>
+
+
+</resources>
