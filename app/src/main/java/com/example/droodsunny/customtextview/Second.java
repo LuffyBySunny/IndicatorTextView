@@ -14,14 +14,7 @@ public class Second extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
 
-        mButton=findViewById(R.id.button);
 
-        mButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ( (Activity)view.getContext()).finish();
-            }
-        });
 
     }
 }

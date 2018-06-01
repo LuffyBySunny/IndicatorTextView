@@ -9,10 +9,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,10 +33,13 @@ public class MainActivity extends AppCompatActivity {
 
     private PopupWindow mPopupWindow;
     //加载菜单
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main,menu);
-        return true;
+        MenuInflater inflater=getMenuInflater();
+        inflater.inflate(R.menu.main,menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     //做具体的处理
@@ -51,21 +56,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-      /*  mButton=findViewById(R.id.button);*/
 
-       /* mButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent("com.hh");
-               sendBroadcast(intent);
-            }
-        });*/
+        Toolbar toolbar=findViewById(R.id.toolbar);
+       setSupportActionBar(toolbar);
 
 
-//      通知
+
+        //通知
         Intent intent=new Intent(this,Main2Activity.class);
         PendingIntent pendingIntent=PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
-
         NotificationManager manager= (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         Notification notification=new Notification.Builder(this).setSmallIcon(R.drawable.ic_launcher_background).
                 setContentIntent(pendingIntent).

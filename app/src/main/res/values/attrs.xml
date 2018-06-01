@@ -17,6 +17,9 @@
         <attr name="tWidth" format="dimension"/>
         <attr name="backColor" format="color"/>
     </declare-styleable>
+    <declare-styleable name="VerticalTextView">
+        <attr name="VtextSize" format="dimension"/>
+    </declare-styleable>
 
 
 </resources>

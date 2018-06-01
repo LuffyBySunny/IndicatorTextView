@@ -26,7 +26,7 @@ public class SideText extends View {
     private int defaultColor ;//默认字体颜色
     private int selectedColor;//选中的字体颜色
     private int touchedColor;//触摸后字体颜色
-
+    private int textWidth;//字体的宽度
     private int tWidth;//view宽度
     private int backColor;//view背景颜色
     private Paint mPaint;//绘制文字
@@ -65,7 +65,7 @@ public class SideText extends View {
         selectedColor=attributes.getColor(R.styleable.SideText_selectedColor,Color.GREEN);
 
         touchedColor=attributes.getColor(R.styleable.SideText_textTouchedColor,Color.WHITE); //触摸之后，text的颜色
-        tWidth= (int) attributes.getDimension(R.styleable.SideText_tWidth,60);
+        tWidth= (int) attributes.getDimension(R.styleable.SideText_tWidth,60);//指定的view宽度
         backColor=attributes.getColor(R.styleable.SideText_backColor,Color.GRAY);
         attributes.recycle();
 
@@ -74,16 +74,17 @@ public class SideText extends View {
         mBound=new Rect();
         mPaint.setAntiAlias(true);//开启抗锯齿
 
-        mPaint.setTextSize(textSize);//获取字体大小
+        mPaint.setTextSize(textSize);//设置Paint绘制的字体大小
         mPaint.getTextBounds(String.valueOf(lettersList.get(0)),0,1,mBound);//测量字母的高度
         textHeight=mBound.height();//获得每个字母的高度
+        textWidth=mBound.width();
 
         Log.d("textHeight",textHeight+"");
 
-        oval1=new RectF(0,0,tWidth,tWidth);//上部分半圆
-        oval2=new RectF(0,26*textHeight+25*textSpace,tWidth,tWidth+26*textHeight+25*textSpace);//下半圆
+
     }
 
+    @SuppressLint("DrawAllocation")
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -91,17 +92,14 @@ public class SideText extends View {
         int widthMode=MeasureSpec.getMode(widthMeasureSpec);
         int heightSize=MeasureSpec.getSize(heightMeasureSpec);
         int widthSize=MeasureSpec.getSize(widthMeasureSpec);
-        int width;
         int height;
         if(widthMode==MeasureSpec.EXACTLY){
             //如果是match_parent或者是具体值
-            width=widthSize;
+            tWidth=widthSize;
         }else {
             //wrap_content
-            width=tWidth;
+            tWidth=  textWidth+30;
         }
-        Log.d("widthSize",widthSize+"");
-        Log.d("tWidth",tWidth+"");
         if (heightMode==MeasureSpec.EXACTLY){
             //如果是match_parent或者是具体值
             height=heightSize;
@@ -109,13 +107,15 @@ public class SideText extends View {
             height= (int) (26 * textHeight + tWidth + textSpace * 25);
         }
 
-        setMeasuredDimension(width,height);//设置大小
+        oval1=new RectF(0,0,tWidth,tWidth);//上部分半圆
+        oval2=new RectF(0, (26 * textHeight) + (25 * textSpace),tWidth,tWidth+26*textHeight+25*textSpace);//下半圆
+        setMeasuredDimension(tWidth,height);//设置大小
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        int viewWidth=getMeasuredWidth();//获得view宽度
+
         int x;//绘制字母的x坐标
         int y;//绘制字母的y坐标
         switch (mSTATE){
@@ -125,10 +125,10 @@ public class SideText extends View {
                 y= (int) (tWidth/2+textHeight);
                 for(int i=0;i<26;i++){
                    mPaint.getTextBounds(lettersList.get(i).toString(),0,1,mBound);
-                   x=(getMeasuredWidth()-mBound.width())/2;//获得绘制的x坐标起点
+                   x=(getMeasuredWidth() - mBound.width()) / 2;//获得绘制的x坐标起点
+                    Log.d("tWidth",mBound.height()+"");
                     canvas.drawText(lettersList.get(i).toString(),x,y,mPaint);
                     y+=textHeight+textSpace;
-
                 }
                 break;
             case TOUCH://点击状态，灰色view+白色字母
@@ -140,7 +140,6 @@ public class SideText extends View {
                 canvas.drawRect(0,tWidth/2,tWidth,26*textHeight+25*textSpace+tWidth/2,mPaint);
                 y= (int) (tWidth/2+textHeight);
                // mPaint.setColor(touchedColor);
-
                 for(int i=0;i<26;i++){
                     //每绘制一个字母之前都要测量一下大小
                    mPaint.getTextBounds(lettersList.get(i).toString(),0,1,mBound);
@@ -158,7 +157,6 @@ public class SideText extends View {
                 break;
         }
     }
-
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -195,6 +193,7 @@ public class SideText extends View {
     }
 
     private void initLetters(){
+
 
         lettersList=new ArrayList<>();
        for(char c='A';c<='Z';c++){

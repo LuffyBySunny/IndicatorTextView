@@ -115,8 +115,6 @@ public class IndicatorText extends View {
         int heightMode = MeasureSpec.getMode(heightMeasureSpec);
         int width;
         int height;
-
-
         if (widthMode == MeasureSpec.EXACTLY) {
             width = widthSize;
         } else {

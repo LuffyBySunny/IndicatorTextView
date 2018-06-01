@@ -9,15 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".MainActivity"></activity>
         <activity android:name=".Second">
             <intent-filter>
                 <action android:name="com.example.droodsunny.customtextview" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -27,15 +23,12 @@
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="com.hhh"/>
+                <action android:name="com.hhh" />
             </intent-filter>
-
-
         </receiver>
 
-        <activity android:name=".Main2Activity">
-
-        </activity>
+        <activity android:name=".Main2Activity"></activity>
+        <activity android:name=".Main3Activity"></activity>
     </application>
 
 </manifest>

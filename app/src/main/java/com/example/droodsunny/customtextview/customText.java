@@ -50,7 +50,7 @@ public class customText extends View {
 
         //获取自定义属性的值
 
-        TypedArray array=context.getTheme().obtainStyledAttributes(attrs,R.styleable.customText,defStyleAttr,0);
+        TypedArray array=context.getTheme().obtainStyledAttributes(attrs,R.styleable.customText,    defStyleAttr,0);
 
         mText = array.getString(R.styleable.customText_mText);
         mTextColor=array.getColor(R.styleable.customText_mTextColor, Color.BLACK);
@@ -85,6 +85,7 @@ public class customText extends View {
     public float getTextSize(){
         return mTextSize;
     }
+
     @Override
     protected void onDraw(Canvas canvas) {
         //绘制文字
@@ -104,6 +105,7 @@ public class customText extends View {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
+        Log.d("onMeasure","我被调用了");
         float fontScale=getResources().getDisplayMetrics().scaledDensity;
         int widthMode=MeasureSpec.getMode(widthMeasureSpec);//获取宽的模式
         int heightMode=MeasureSpec.getMode(heightMeasureSpec);//获取高的模式
@@ -129,7 +131,7 @@ public class customText extends View {
                 Log.d("lineStr",mTextSize/fontScale+0.5f+"");
                 Log.d("lineStr",specWidth+"");
                 Log.d("lineStr",spLineNum+"");
-                //每一行字符串的长度
+                //每一行文字的个数
                 int lineLength= (int) (specWidth/mTextSize);
                 String lineStr;
                 for(int i=0;i<spLineNum;i++){
@@ -152,7 +154,6 @@ public class customText extends View {
         if(widthMode==MeasureSpec.EXACTLY){
             width=widthSize;
         }else{
-
             //控件的宽度就是文本的宽度加上两边的内边距。内边距就是padding值，在构造方法执行完就被赋值
             width=(int)(textWidth+getPaddingLeft()+getPaddingRight());
         }
